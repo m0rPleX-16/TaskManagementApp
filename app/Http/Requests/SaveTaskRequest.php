@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use App\Enums\TaskStatus;
 
 class SaveTaskRequest extends FormRequest
 {
@@ -23,12 +25,11 @@ class SaveTaskRequest extends FormRequest
     {
         return [
             //
-            'categories_id' => 'required|exists:categories,id',
+            'categories_id' => ['required',Rule::exists('categories','id')],
             'title'=> 'required|string|max:100',
             'description' => 'nullable|string',
             'due_date' => 'nullable|date',
-            'status' => 'required|in:pending,in_progress,completed',
-            'category_id' => 'nullable|exists:categories,id',
+            'status' => ['required', Rule::enum(TaskStatus::class)],
         ];
     }
 }

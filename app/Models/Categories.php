@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 class Categories extends Model
 {
     //
@@ -21,8 +22,8 @@ class Categories extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function tasks(): BelongsTo
+    public function tasks(): HasMany
     {
-        return $this->belongsTo(Task::class);
+        return $this->hasMany(Task::class, 'category_id');
     }
 }

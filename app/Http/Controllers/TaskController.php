@@ -63,10 +63,11 @@ class TaskController extends Controller
     public function edit(Task $task)
     {
         //
+        $this->authorize('update', $task);
 
-    $user = auth()->user();
+        $user = auth()->user();
 
-    return view('tasks.edit', compact('task', 'user'));
+        return view('tasks.edit', compact('task', 'user'));
     }
 
     /**
@@ -74,12 +75,14 @@ class TaskController extends Controller
      */
     public function update(SaveTaskRequest $request, Task $task)
     {
-    //
-    $data = $request->validated();
-    
-    $task->update($data);
+        //
+        $this->authorize('update', $task);
 
-    return redirect()->route('tasks.index', $task)->with('success', 'Task created successfully.');
+        $data = $request->validated();
+
+        $task->update($data);
+
+        return redirect()->route('tasks.index', $task)->with('success', 'Task updated successfully.');
     }
 
     /**
@@ -88,7 +91,9 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         //
-    $task->delete();
-    return redirect()->route('tasks.index')->with('success', 'Task deleted successfully.');
+        $this->authorize('delete', $task);
+
+        $task->delete();
+        return redirect()->route('tasks.index')->with('success', 'Task deleted successfully.');
     }
 }

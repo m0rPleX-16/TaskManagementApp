@@ -75,9 +75,11 @@
                         <select id="status" name="status"
                             class="mt-1 block w-full rounded-md border border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                             required>
-                            <option value="pending" {{ old('status') === 'pending' ? 'selected' : '' }}>{{ __('Pending') }}</option>
-                            <option value="in_progress" {{ old('status') === 'in_progress' ? 'selected' : '' }}>{{ __('In Progress') }}</option>
-                            <option value="completed" {{ old('status') === 'completed' ? 'selected' : '' }}>{{ __('Completed') }}</option>
+                            @foreach (App\Enums\TaskStatus::cases() as $status)
+                                <option value="{{ $status->value }}" {{ old('status') === $status->value ? 'selected' : '' }}>
+                                    {{ $status->label() }}
+                                </option>
+                            @endforeach
                         </select>
                         @error('status')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

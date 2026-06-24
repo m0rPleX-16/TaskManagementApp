@@ -54,15 +54,13 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full
-                                            @if($task->status === 'completed')
-                                                bg-green-100 text-green-800
-                                            @elseif($task->status === 'in_progress')
-                                                bg-yellow-100 text-yellow-800
-                                            @else
-                                                bg-red-100 text-red-800
-                                            @endif
+                                            @switch($task->status->color())
+                                                @case('green') bg-green-100 text-green-800 @break
+                                                @case('amber') bg-amber-100 text-amber-800 @break
+                                                @default bg-yellow-100 text-yellow-800
+                                            @endswitch
                                         ">
-                                            {{ ucfirst(str_replace('_', ' ', $task->status)) }}
+                                            {{ $task->status->label() }}
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">

@@ -119,15 +119,13 @@
                                         <p class="text-sm text-gray-600 dark:text-gray-400">{{ $task->categories?->name ?? 'No category' }}</p>
                                     </div>
                                     <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full
-                                        @if($task->status === 'completed')
-                                            bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200
-                                        @elseif($task->status === 'in_progress')
-                                            bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200
-                                        @else
-                                            bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200
-                                        @endif
+                                        @switch($task->status->color())
+                                            @case('green') bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 @break
+                                            @case('amber') bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200 @break
+                                            @default bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200
+                                        @endswitch
                                     ">
-                                        {{ ucfirst(str_replace('_', ' ', $task->status)) }}
+                                        {{ $task->status->label() }}
                                     </span>
                                 </div>
                             @endforeach

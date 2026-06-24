@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Enums\TaskStatus;
+
 class Task extends Model
 {
     //
@@ -28,6 +30,7 @@ class Task extends Model
      */
     protected $casts = [
         'due_date' => 'date',
+        'status' => TaskStatus::class,
     ];
     public function user(): BelongsTo
     {
